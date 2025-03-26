@@ -2,17 +2,17 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {Registry} from "../src/Registry.sol";
+import {PropertyRegistry} from "../src/Registry.sol";
 
-contract RegistryScript is Script {
-    Registry public Registry;
+contract PropertyRegistryScript is Script {
+    PropertyRegistry public propertyRegistry;
 
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
 
-        Registry = new Registry();
+        propertyRegistry = new PropertyRegistry();
 
         vm.stopBroadcast();
     }
