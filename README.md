@@ -1,66 +1,8 @@
-## Foundry
+## Encode Advanced Solidity Bootcamp Q1 2025 - Group 10 Project
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Decentralized Property Registry
+- This is Decentralized Property Registry smart contract project.
+- The aim was to optimize the contract created to reduce gas cost for function and deployment cost.
+- There are two contracts `src/Registry.sol` and `src/OptimizedRegistry.sol`, which are the same contract with same functionality but one is the optimized version of the other contract.
+- There are improvements done in `compelteMutation` function to reduce its minimum Gas cost from 47198 to 30113
+- Also improvements in overall contract to reduce deployment cost from 1191517 to 1152599.
