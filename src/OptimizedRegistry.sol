@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.28;
 
 contract PropertyRegistry {
     struct Property {
@@ -42,14 +42,10 @@ contract PropertyRegistry {
         verifiedRegistrars[msg.sender] = true;
     }
 
-    // Optimized addRegistrar (using standard Solidity)
     function addRegistrar(address _registrar) public onlyRegistrar {
         verifiedRegistrars[_registrar] = true;
     }
 
-    // Optimized registerProperty using Solidity.
-    // Caches the property pointer to avoid duplicate SLOAD operations.
-    // Reverts with "Property already registered" if the property exists.
     function registerProperty(
         uint256 _plotNo,
         string memory _east,
@@ -62,22 +58,16 @@ contract PropertyRegistry {
         bytes32 _aadhaarHash,
         bytes32 _panHash
     ) public onlyRegistrar {
-        // Cache the storage pointer
         Property storage prop = properties[_plotNo];
         require(prop.plotNo == 0, "Property already registered");
-
-        // Assign fixed-size fields.
         prop.plotNo = _plotNo;
         prop.governmentValue = _governmentValue;
         prop.area = _area;
         prop.currentOwner = _owner;
-        // The booleans default to false but we explicitly set them for clarity.
         prop.isEncumbered = false;
         prop.isMutationComplete = false;
         prop.aadhaarHash = _aadhaarHash;
         prop.panHash = _panHash;
-
-        // Assign dynamic string fields.
         prop.east = _east;
         prop.west = _west;
         prop.north = _north;
@@ -85,9 +75,6 @@ contract PropertyRegistry {
 
         emit PropertyRegistered(_plotNo, _owner);
     }
-
-    // Optimized transferProperty using Solidity.
-    // Caches the property pointer and performs the checks once.
     function transferProperty(uint256 _plotNo, address _buyer, uint256 _salePrice) public {
         Property storage prop = properties[_plotNo];
         require(msg.sender == prop.currentOwner, "Only owner can transfer");
@@ -103,15 +90,12 @@ contract PropertyRegistry {
             })
         );
 
-        // Update the property: transfer ownership and reset mutation flag.
         prop.currentOwner = _buyer;
         prop.isMutationComplete = false;
 
         emit PropertyTransferred(_plotNo, msg.sender, _buyer, _salePrice);
     }
 
-    // Optimized updateEncumbranceStatus using Solidity.
-    // Uses a local pointer and only writes if the new status differs.
     function updateEncumbranceStatus(uint256 _plotNo, bool _status) public {
         require(verifiedRegistrars[msg.sender], "Not an authorized registrar");
 
